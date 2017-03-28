@@ -16,13 +16,16 @@
 
 //! Parity Brain Wallet Generator.
 
+#![warn(missing_docs)]
+
 #[macro_use]
 extern crate lazy_static;
+
 extern crate itertools;
 extern crate rand;
 
-use rand::{Rng, OsRng};
 use itertools::Itertools;
+use rand::{Rng, OsRng};
 
 /// Generate a string which is a random phrase of a number of lowercase words.
 ///
