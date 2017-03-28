@@ -16,7 +16,44 @@
 
 const dictionary = require('./res/wordlist.json')
 
+// Adapted from https://github.com/tonyg/js-scrypt
+// js-scrypt is written by Tony Garnock-Jones tonygarnockjones@gmail.com and is licensed under the 2-clause BSD license:
+function secureRandomBytes (count) {
+  function isDefined (str) {
+    return str !== 'undefined'
+  }
+
+  if (!isDefined(typeof Uint8Array)) {
+    return null
+  }
+
+  const bs = new Uint8Array(count)
+  const self = isDefined(typeof window) ? window : isDefined(typeof global) ? global : this
+
+  if (isDefined(typeof self.crypto)) {
+    if (isDefined(typeof self.crypto.getRandomValues)) {
+      self.crypto.getRandomValues(bs)
+      return bs
+    }
+  }
+
+  if (isDefined(typeof self.msCrypto)) {
+    if (isDefined(typeof self.msCrypto.getRandomValues)) {
+      self.msCrypto.getRandomValues(bs)
+      return bs
+    }
+  }
+
+  return null
+}
+
 function randomBytes (length) {
+  const random = secureRandomBytes(length)
+  if (random) {
+    return random
+  }
+
+  // Fallback if secure randomness is not available
   const buf = Buffer.alloc(length)
 
   for (let i = 0; i < length; i++) {
