@@ -1,0 +1,5 @@
+res/wordlist.txt
+src
+target
+Cargo.lock
+Cargo.toml
