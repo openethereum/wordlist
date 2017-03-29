@@ -1,0 +1,26 @@
+{
+  "name": "@parity/wordlist",
+  "version": "1.0.0",
+  "description": "Parity Brain Wallets wordlist library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha index.spec.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paritytech/wordlist.git"
+  },
+  "author": "Parity Technologies <admin@parity.io>",
+  "license": "GPL3",
+  "bugs": {
+    "url": "https://github.com/paritytech/wordlist/issues"
+  },
+  "homepage": "https://github.com/paritytech/wordlist#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0",
+    "standard": "^9.0.2"
+  }
+}

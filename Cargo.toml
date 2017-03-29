@@ -1,0 +1,11 @@
+[package]
+name = "parity-wordlist"
+version = "1.0.0"
+description = "Word list used to generate brain wallets for Parity."
+license = "GPL-3.0"
+authors = ["Parity Technologies <admin@parity.io>"]
+
+[dependencies]
+lazy_static = "0.2"
+rand = "0.3"
+itertools = "0.5"
