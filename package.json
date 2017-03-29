@@ -12,7 +12,7 @@
     "url": "git+https://github.com/paritytech/wordlist.git"
   },
   "author": "Parity Technologies <admin@parity.io>",
-  "license": "GPL3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/paritytech/wordlist/issues"
   },
