@@ -1,6 +1,6 @@
 {
   "name": "@parity/wordlist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parity Brain Wallets wordlist library",
   "main": "index.js",
   "scripts": {

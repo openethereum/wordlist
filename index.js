@@ -16,13 +16,13 @@
 
 const dictionary = require('./res/wordlist.json')
 
+function isDefined (str) {
+  return str !== 'undefined'
+}
+
 // Adapted from https://github.com/tonyg/js-scrypt
 // js-scrypt is written by Tony Garnock-Jones tonygarnockjones@gmail.com and is licensed under the 2-clause BSD license:
 function secureRandomBytes (count) {
-  function isDefined (str) {
-    return str !== 'undefined'
-  }
-
   if (!isDefined(typeof Uint8Array)) {
     return null
   }
@@ -54,7 +54,7 @@ function randomBytes (length) {
   }
 
   // Fallback if secure randomness is not available
-  const buf = Buffer.alloc(length)
+  const buf = isDefined(typeof Buffer) ? Buffer.alloc(length) : Array(length);
 
   for (let i = 0; i < length; i++) {
     buf[i] = Math.random() * 255
