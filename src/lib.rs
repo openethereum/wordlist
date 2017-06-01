@@ -34,9 +34,8 @@ use rand::{Rng, OsRng};
 /// which is enough to saturate 32-byte key space
 pub fn random_phrase(words: usize) -> String {
 	lazy_static! {
-		static ref WORDS: Vec<String> = String::from_utf8_lossy(include_bytes!("../res/wordlist.txt"))
+		static ref WORDS: Vec<&'static str> = include_str!("../res/wordlist.txt")
 			.lines()
-			.map(|s| s.to_owned())
 			.collect();
 	}
 	let mut rng = OsRng::new().expect("Not able to operate without random source.");
