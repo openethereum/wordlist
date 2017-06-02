@@ -54,7 +54,7 @@ function randomBytes (length) {
   }
 
   // Fallback if secure randomness is not available
-  const buf = isDefined(typeof Buffer) ? Buffer.alloc(length) : Array(length);
+  const buf = isDefined(typeof Buffer) ? Buffer.alloc(length) : Array(length)
 
   for (let i = 0; i < length; i++) {
     buf[i] = Math.random() * 255
