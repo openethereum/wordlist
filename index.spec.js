@@ -21,10 +21,11 @@ const { expect } = require('chai')
 const {
   randomNumber,
   randomWord,
-  randomPhrase
+  randomPhrase,
+  verifyPhrase
 } = require('./')
 
-describe('api/local/ethkey', () => {
+describe('wordlist', () => {
   describe('randomNumber', () => {
     it('generates numbers in range', () => {
       for (let i = 0; i < 100; i++) {
@@ -56,4 +57,15 @@ describe('api/local/ethkey', () => {
       })
     })
   })
+
+  describe('verifyPhrase', () => {
+    it('verifies too short phrase', () => {
+      const phrase = randomPhrase(7)
+
+      expect(verifyPhrase(phrase, 7)).to.be.equal(true)
+      expect(() => verifyPhrase(phrase, 12)).to.throw(Error, 'too short')
+      expect(() => verifyPhrase('xxx', 0)).to.throw(Error, 'not in the dictionary')
+    })
+  })
+
 })

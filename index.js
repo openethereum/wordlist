@@ -90,9 +90,32 @@ function randomPhrase (length) {
   return words.join(' ')
 }
 
+let dictionaryLookup = null
+
+function verifyPhrase (phrase, expectedLength) {
+  if (!dictionaryLookup) {
+    dictionaryLookup = {}
+    dictionary.forEach(word => dictionaryLookup[word] = true)
+  }
+
+  const words = phrase.split(/\s+/)
+  
+  const wrongWord = words.find(word => !dictionaryLookup[word]);
+  if (wrongWord) {
+    throw new Error(`Word is not in the dictionary: ${wrongWord}.`)
+  }
+
+  if (words.length < expectedLength) {
+    throw new Error(`Phrase is too short: ${words.length}.`)
+  }
+
+  return true;
+}
+
 module.exports = {
   randomBytes,
   randomNumber,
   randomWord,
-  randomPhrase
+  randomPhrase,
+  verifyPhrase
 }
