@@ -95,12 +95,14 @@ let dictionaryLookup = null
 function verifyPhrase (phrase, expectedLength) {
   if (!dictionaryLookup) {
     dictionaryLookup = {}
-    dictionary.forEach(word => dictionaryLookup[word] = true)
+    dictionary.forEach(word => {
+      dictionaryLookup[word] = true
+    })
   }
 
   const words = phrase.split(/\s+/)
-  
-  const wrongWord = words.find(word => !dictionaryLookup[word]);
+
+  const wrongWord = words.find(word => !dictionaryLookup[word])
   if (wrongWord) {
     throw new Error(`Word is not in the dictionary: ${wrongWord}.`)
   }
@@ -109,7 +111,7 @@ function verifyPhrase (phrase, expectedLength) {
     throw new Error(`Phrase is too short: ${words.length}.`)
   }
 
-  return true;
+  return true
 }
 
 module.exports = {

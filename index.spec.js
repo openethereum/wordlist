@@ -67,5 +67,4 @@ describe('wordlist', () => {
       expect(() => verifyPhrase('xxx', 0)).to.throw(Error, 'not in the dictionary')
     })
   })
-
 })
