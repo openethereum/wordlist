@@ -24,27 +24,65 @@ extern crate lazy_static;
 extern crate itertools;
 extern crate rand;
 
+use std::collections::HashSet;
 use itertools::Itertools;
 use rand::{Rng, OsRng};
+
+fn words() -> &'static [&'static str] {
+	lazy_static! {
+		static ref WORDS: Vec<&'static str> = include_str!("../res/wordlist.txt")
+			.lines()
+			.collect();
+	}
+  &WORDS
+}
 
 /// Generate a string which is a random phrase of a number of lowercase words.
 ///
 /// `words` is the number of words, chosen from a dictionary of 7,530. An value of
 /// 12 gives 155 bits of entropy (almost saturating address space); 20 gives 258 bits
 /// which is enough to saturate 32-byte key space
-pub fn random_phrase(words: usize) -> String {
-	lazy_static! {
-		static ref WORDS: Vec<&'static str> = include_str!("../res/wordlist.txt")
-			.lines()
-			.collect();
-	}
+pub fn random_phrase(no_of_words: usize) -> String {
+  let words = words();
 	let mut rng = OsRng::new().expect("Not able to operate without random source.");
-	(0..words).map(|_| rng.choose(&WORDS).unwrap()).join(" ")
+	(0..no_of_words).map(|_| rng.choose(words).unwrap()).join(" ")
+}
+
+/// Phrase Validation Error
+#[derive(Debug, Clone, PartialEq)]
+pub enum Error {
+  /// Phrase is shorter than it was expected.
+  PhraseTooShort(usize),
+  /// Phrase contains a word that doesn't come from our dictionary.
+  WordNotFromDictionary(String),
+}
+
+/// Validates given phrase and checks if:
+/// 1. All the words are coming from the dictionary.
+/// 2. There are at least `expected_no_of_words` in the phrase.
+pub fn validate_phrase(phrase: &str, expected_no_of_words: usize) -> Result<(), Error> {
+	lazy_static! {
+    static ref WORDS: HashSet<&'static str> = words().iter().cloned().collect();
+  }
+
+  let mut len = 0;
+  for word in phrase.split_whitespace() {
+    len += 1;
+    if !WORDS.contains(word) {
+      return Err(Error::WordNotFromDictionary(word.into()));
+    }
+  }
+
+  if len < expected_no_of_words {
+    return Err(Error::PhraseTooShort(len));
+  }
+
+  return Ok(());
 }
 
 #[cfg(test)]
 mod tests {
-	use super::random_phrase;
+	use super::{validate_phrase, random_phrase, Error};
 
 	#[test]
 	fn should_produce_right_number_of_words() {
@@ -57,5 +95,14 @@ mod tests {
 		let p = random_phrase(10);
 		assert!(!p.contains('\r'), "Carriage return should be trimmed.");
 	}
+
+  #[test]
+  fn should_validate_the_phrase() {
+    let p = random_phrase(10);
+
+    assert_eq!(validate_phrase(&p, 10), Ok(()));
+    assert_eq!(validate_phrase(&p, 12), Err(Error::PhraseTooShort(10)));
+    assert_eq!(validate_phrase("xxx", 0), Err(Error::WordNotFromDictionary("xxx".into())));
+  }
 }
 
