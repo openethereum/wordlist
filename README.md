@@ -8,7 +8,7 @@ Parity Brain Wallets wordlist library
 # Cargo.toml
 
 [dependencies]
-parity-wordlist = "1.0"
+parity-wordlist = "1.1"
 ```
 
 ```rust
