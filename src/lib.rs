@@ -24,12 +24,14 @@ extern crate lazy_static;
 extern crate itertools;
 extern crate rand;
 
+use std::fmt;
 use std::collections::HashSet;
 use itertools::Itertools;
 use rand::{Rng, OsRng};
 
+/// The list of dictionary words.
 // the wordlist JSON also happens to be valid Rust syntax for an array constant.
-const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
+pub const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
 
 /// Generate a string which is a random phrase of a number of lowercase words.
 ///
@@ -48,6 +50,15 @@ pub enum Error {
 	PhraseTooShort(usize),
 	/// Phrase contains a word that doesn't come from our dictionary.
 	WordNotFromDictionary(String),
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Error::PhraseTooShort(len) => writeln!(fmt, "The phrase is too short ({})", len),
+            Error::WordNotFromDictionary(ref word) => writeln!(fmt, "The word '{}' does not come from the dictionary.", word),
+        }
+    }
 }
 
 /// Validates given phrase and checks if:
