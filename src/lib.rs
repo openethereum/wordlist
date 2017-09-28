@@ -46,10 +46,10 @@ pub fn random_phrase(no_of_words: usize) -> String {
 /// Phrase Validation Error
 #[derive(Debug, Clone, PartialEq)]
 pub enum Error {
-  /// Phrase is shorter than it was expected.
-  PhraseTooShort(usize),
-  /// Phrase contains a word that doesn't come from our dictionary.
-  WordNotFromDictionary(String),
+	/// Phrase is shorter than it was expected.
+	PhraseTooShort(usize),
+	/// Phrase contains a word that doesn't come from our dictionary.
+	WordNotFromDictionary(String),
 }
 
 impl fmt::Display for Error {
@@ -66,22 +66,22 @@ impl fmt::Display for Error {
 /// 2. There are at least `expected_no_of_words` in the phrase.
 pub fn validate_phrase(phrase: &str, expected_no_of_words: usize) -> Result<(), Error> {
 	lazy_static! {
-    static ref WORD_SET: HashSet<&'static str> = WORDS.iter().cloned().collect();
-  }
+		static ref WORD_SET: HashSet<&'static str> = WORDS.iter().cloned().collect();
+	}
 
-  let mut len = 0;
-  for word in phrase.split_whitespace() {
-    len += 1;
-    if !WORD_SET.contains(word) {
-      return Err(Error::WordNotFromDictionary(word.into()));
-    }
-  }
+	let mut len = 0;
+	for word in phrase.split_whitespace() {
+		len += 1;
+		if !WORD_SET.contains(word) {
+			return Err(Error::WordNotFromDictionary(word.into()));
+		}
+	}
 
-  if len < expected_no_of_words {
-    return Err(Error::PhraseTooShort(len));
-  }
+	if len < expected_no_of_words {
+		return Err(Error::PhraseTooShort(len));
+	}
 
-  return Ok(());
+	return Ok(());
 }
 
 #[cfg(test)]
@@ -100,13 +100,13 @@ mod tests {
 		assert!(!p.contains('\r'), "Carriage return should be trimmed.");
 	}
 
-  #[test]
-  fn should_validate_the_phrase() {
-    let p = random_phrase(10);
+	#[test]
+	fn should_validate_the_phrase() {
+		let p = random_phrase(10);
 
-    assert_eq!(validate_phrase(&p, 10), Ok(()));
-    assert_eq!(validate_phrase(&p, 12), Err(Error::PhraseTooShort(10)));
-    assert_eq!(validate_phrase("xxx", 0), Err(Error::WordNotFromDictionary("xxx".into())));
-  }
+		assert_eq!(validate_phrase(&p, 10), Ok(()));
+		assert_eq!(validate_phrase(&p, 12), Err(Error::PhraseTooShort(10)));
+		assert_eq!(validate_phrase("xxx", 0), Err(Error::WordNotFromDictionary("xxx".into())));
+	}
 }
 
