@@ -2,7 +2,7 @@
 Parity Brain Wallets wordlist library
 
 
-[Rust Documentation](https://docs.rs/parity-wordlist/1.1.0/parity_wordlist/)
+[Rust Documentation](https://docs.rs/parity-wordlist/)
 
 
 # RUST
