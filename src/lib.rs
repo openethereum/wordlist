@@ -27,7 +27,7 @@ extern crate rand;
 use std::fmt;
 use std::collections::HashSet;
 use itertools::Itertools;
-use rand::{Rng, OsRng};
+use rand::{rngs::OsRng, seq::SliceRandom};
 
 /// The list of dictionary words.
 // the wordlist JSON also happens to be valid Rust syntax for an array constant.
@@ -40,7 +40,7 @@ pub const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
 /// which is enough to saturate 32-byte key space
 pub fn random_phrase(no_of_words: usize) -> String {
 	let mut rng = OsRng::new().expect("Not able to operate without random source.");
-	(0..no_of_words).map(|_| rng.choose(WORDS).unwrap()).join(" ")
+	(0..no_of_words).map(|_| WORDS.choose(&mut rng).unwrap()).join(" ")
 }
 
 /// Phrase Validation Error
