@@ -9,4 +9,4 @@ repository = "https://github.com/paritytech/wordlist"
 [dependencies]
 lazy_static = "1.0"
 rand = "0.5"
-itertools = "0.5"
+
