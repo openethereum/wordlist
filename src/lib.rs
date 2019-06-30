@@ -25,7 +25,7 @@ extern crate rand;
 
 use std::fmt;
 use std::collections::HashSet;
-use rand::{Rng, OsRng};
+use rand::{rngs::OsRng, seq::SliceRandom};
 
 /// The list of dictionary words.
 // the wordlist JSON also happens to be valid Rust syntax for an array constant.
