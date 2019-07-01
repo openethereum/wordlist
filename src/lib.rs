@@ -21,12 +21,10 @@
 #[macro_use]
 extern crate lazy_static;
 
-extern crate itertools;
 extern crate rand;
 
 use std::fmt;
 use std::collections::HashSet;
-use itertools::Itertools;
 use rand::{rngs::OsRng, seq::SliceRandom};
 
 /// The list of dictionary words.
@@ -40,7 +38,11 @@ pub const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
 /// which is enough to saturate 32-byte key space
 pub fn random_phrase(no_of_words: usize) -> String {
 	let mut rng = OsRng::new().expect("Not able to operate without random source.");
-	(0..no_of_words).map(|_| WORDS.choose(&mut rng).unwrap()).join(" ")
+	(0..no_of_words).map(|_| WORDS.choose(&mut rng).unwrap()).fold(String::new(), |mut acc, word| {
+		acc.push_str(" ");
+		acc.push_str(word);
+		acc
+	}).trim_start().to_owned()
 }
 
 /// Phrase Validation Error
