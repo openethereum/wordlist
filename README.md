@@ -11,20 +11,16 @@ Parity Brain Wallets wordlist library
 # Cargo.toml
 
 [dependencies]
-parity-wordlist = "1.2"
+parity-wordlist = "1.3"
 ```
 
 ```rust
-# main.rs
+// main.rs
 
-extern crate parity_wordlist;
+println!("Words: {}", parity_wordlist::random_phrase(12));
 
-fn main() {
-  println!("Words: {}", parity_wordlist::random_phrase(12));
-
-  let phrase = "violin oblivion cylinder list disarray wobbly fastball showplace oasis patronize septic spearhead";
-  println!("Valid: {:?}", parity_wordlist::validate_phrase(phrase, 12));
-}
+let phrase = "violin oblivion cylinder list disarray wobbly fastball showplace oasis patronize septic spearhead";
+println!("Valid: {:?}", parity_wordlist::validate_phrase(phrase, 12));
 ```
 
 
@@ -46,4 +42,3 @@ console.log(randomPhrase(12))
 // This will throw if the phrase is not valid:
 verifyPhrase("violin oblivion cylinder list disarray wobbly fastball showplace oasis patronize septic spearhead", 12)
 ```
-

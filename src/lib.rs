@@ -18,11 +18,6 @@
 
 #![warn(missing_docs)]
 
-#[macro_use]
-extern crate lazy_static;
-
-extern crate rand;
-
 use std::fmt;
 use std::collections::HashSet;
 use rand::{rngs::OsRng, seq::SliceRandom};
@@ -37,7 +32,7 @@ pub const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
 /// 12 gives 155 bits of entropy (almost saturating address space); 20 gives 258 bits
 /// which is enough to saturate 32-byte key space
 pub fn random_phrase(no_of_words: usize) -> String {
-	let mut rng = OsRng::new().expect("Not able to operate without random source.");
+	let mut rng = OsRng;
 	(0..no_of_words).map(|_| WORDS.choose(&mut rng).unwrap()).fold(String::new(), |mut acc, word| {
 		acc.push_str(" ");
 		acc.push_str(word);
@@ -67,7 +62,7 @@ impl fmt::Display for Error {
 /// 1. All the words are coming from the dictionary.
 /// 2. There are at least `expected_no_of_words` in the phrase.
 pub fn validate_phrase(phrase: &str, expected_no_of_words: usize) -> Result<(), Error> {
-	lazy_static! {
+	lazy_static::lazy_static! {
 		static ref WORD_SET: HashSet<&'static str> = WORDS.iter().cloned().collect();
 	}
 
@@ -111,4 +106,3 @@ mod tests {
 		assert_eq!(validate_phrase("xxx", 0), Err(Error::WordNotFromDictionary("xxx".into())));
 	}
 }
-
