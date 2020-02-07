@@ -37,7 +37,7 @@ pub const WORDS: &'static [&'static str] = &include!("../res/wordlist.json");
 /// 12 gives 155 bits of entropy (almost saturating address space); 20 gives 258 bits
 /// which is enough to saturate 32-byte key space
 pub fn random_phrase(no_of_words: usize) -> String {
-	let mut rng = OsRng::new().expect("Not able to operate without random source.");
+	let mut rng = OsRng;
 	(0..no_of_words).map(|_| WORDS.choose(&mut rng).unwrap()).fold(String::new(), |mut acc, word| {
 		acc.push_str(" ");
 		acc.push_str(word);
