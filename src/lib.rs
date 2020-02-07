@@ -18,11 +18,6 @@
 
 #![warn(missing_docs)]
 
-#[macro_use]
-extern crate lazy_static;
-
-extern crate rand;
-
 use std::fmt;
 use std::collections::HashSet;
 use rand::{rngs::OsRng, seq::SliceRandom};
@@ -67,7 +62,7 @@ impl fmt::Display for Error {
 /// 1. All the words are coming from the dictionary.
 /// 2. There are at least `expected_no_of_words` in the phrase.
 pub fn validate_phrase(phrase: &str, expected_no_of_words: usize) -> Result<(), Error> {
-	lazy_static! {
+	lazy_static::lazy_static! {
 		static ref WORD_SET: HashSet<&'static str> = WORDS.iter().cloned().collect();
 	}
 
@@ -111,4 +106,3 @@ mod tests {
 		assert_eq!(validate_phrase("xxx", 0), Err(Error::WordNotFromDictionary("xxx".into())));
 	}
 }
-
