@@ -1,3 +1,10 @@
+msfadmin
+user
+posgres
+postgres
+service
+password
+123456
 abacus
 abdomen
 abdominal
