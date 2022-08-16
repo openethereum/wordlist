@@ -17,7 +17,7 @@ parity-wordlist = "1.3"
 ```rust
 // main.rs
 
-println!("Words: {}", parity_wordlist::random_phrase(12));
+println!("/Words: {}", parity_wordlist::random_phrase(12));
 
 let phrase = "violin oblivion cylinder list disarray wobbly fastball showplace oasis patronize septic spearhead";
 println!("Valid: {:?}", parity_wordlist::validate_phrase(phrase, 12));
